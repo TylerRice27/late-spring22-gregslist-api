@@ -1,5 +1,6 @@
 import { BadRequest, Forbidden } from "@bcwdev/auth0provider/lib/Errors"
 import { dbContext } from "../db/DbContext.js"
+import { logger } from "../utils/Logger.js"
 
 class CarsService {
 
@@ -39,7 +40,9 @@ class CarsService {
 
     return original
   }
+
   async remove(id, userId) {
+
     const car = await this.getById(id)
     if (car.creatorId.toString() != userId) {
       throw new Forbidden("That aint yor car")
